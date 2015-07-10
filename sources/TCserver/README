@@ -1,0 +1,14 @@
+COMPILE
+
+Compilation is directly on the Raspberry Pi. You need a full toolchain
+directly on the device (g++, gcc, all headers, etcc..)
+
+You also need to install the static version of the wiringPi library.
+http://wiringpi.com/
+
+Compile TCserver like this:
+g++ -Wall TCserver.c -o TCserver -lrt -lncurses -static -lwiringPi -lpthread
+
+(C) 2014 Dr. Alexander K. Seewald, Seewald Solutions
+License: GPLv3  http://www.gnu.org/licenses/gpl-3.0.txt
+More details see http://tc.seewald.at
