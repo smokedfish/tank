@@ -1,0 +1,79 @@
+Other tanks
+http://www.seewald.at/en/2014/10/toycollect
+http://raspberrytank.ianrenton.com/day-9-power-to-the-pi/
+
+Battery
+Seems need either a UBEC and 6 cells or a DC-DC conveter.
+Some good info here:
+http://raspberrytank.ianrenton.com/day-9-power-to-the-pi/
+http://www.fanjita.org/serendipity/archives/60-Running-a-Raspberry-Pi-from-batteries.html
+http://www.raspberrypi-spy.co.uk/2013/02/running-a-raspberry-pi-from-6-aa-batteries/
+http://www.daveakerman.com/?page_id=1294
+
+
+
+
+Notes:
+
+http://www.linuxjournal.com/content/tech-tip-really-simple-http-server-python
+http://www.raspberrypi.org/phpBB3/viewtopic.php?t=45893
+
+Pi can toggle pins at 44Khz.
+
+Should aim for time = 1 for tank to move 1 cm at full speed.
+
+time: value in 10ths second, Default = 0
+left: 2 characters. First character is direction:F (forward) or B (backward). Second character is speed 0 = stop , 8 = full speed
+right: as left.
+void move(int time, boolean lhsIsForward, int lhsSpeed, char rhsIsForward, int rhsSpeed) {
+    boolean stopSpeeds[] = speed[0];
+    boolean lhsSpeeds[] = speed[lhsSpeed];
+	boolean rhsSpeeds[] = speed[rhsSpeed];
+	for (int t = 0; t < time ; t++) {
+	    int speedIndex = t % speed.length;
+		lhsMotora = lhsIsForward ? stopSpeeds[speedIndex] : lhsSpeeds[speedIndex];
+		lhsMotorb = lhsIsForward ? lhsSpeeds[speedIndex] : stopSpeeds[speedIndex];
+		rhsMotora = rhsIsForward ? stopSpeeds[speedIndex] : rhsSpeeds[speedIndex];
+		rhsMotorb = rhsIsForward ? rhsSpeeds[speedIndex] : stopSpeeds[speedIndex];
+		motorSetPins(lhsMotora, lhsMotorb, rhsMotora, rhsMotorb);
+		sleep(100);
+	}
+}
+
+http://x.x.x.x:8080/tank?time=999&left=f8&right=r8
+
+speed = 0
+cycle 01234567
+value 00000000
+
+speed = 1
+cycle 01234567
+value 10000000
+
+speed = 2
+cycle 01234567
+value 11000000
+
+speed = 3
+cycle 01234567
+value 11100000
+
+speed = 4
+cycle 01234567
+value 11110000
+
+speed = 5
+cycle 01234567
+value 11111000
+
+speed = 6
+cycle 01234567
+value 11111100 
+
+speed = 7
+cycle 01234567
+value 11111110
+
+speed = 8
+cycle 01234567
+value 11111111
